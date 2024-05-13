@@ -70,12 +70,33 @@ function checkGameOver() {
 }
 
 function handleClick(index) {
-  if (gameGrid[index] === "") {
+  if (gameGrid[index] === "" && currentPlayer === "X") {
     boxes[index].innerText = currentPlayer;
     gameGrid[index] = currentPlayer;
     boxes[index].style.pointerEvents = "none";
     swapTurn();
     checkGameOver();
+    
+    // Check if the game is not over and it's now O's turn
+    if (currentPlayer === "O") {
+      // Call the AI function to make a move
+      makeAIMove();
+    }
+  }
+}
+
+function makeAIMove() {
+  // Simple AI logic: Choose the first available empty box
+  for (let i = 0; i < gameGrid.length; i++) {
+    if (gameGrid[i] === "") {
+      // Make the move for "O" player
+      gameGrid[i] = currentPlayer;
+      boxes[i].innerText = currentPlayer;
+      boxes[i].style.pointerEvents = "none";
+      swapTurn();
+      checkGameOver();
+      break;
+    }
   }
 }
 
